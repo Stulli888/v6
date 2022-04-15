@@ -2,6 +2,8 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import Link from 'next/link'
+import { PrismicRichText } from '@prismicio/react';
 import { fetchFromPrismic } from '../api/prismic';
 import { asText } from '@prismicio/helpers';
 
@@ -10,7 +12,7 @@ type PrismicRichText = any;
 type Props = any;
 
 const Home: NextPage = ({home, pageLinks}: Props) => {
-  console.log('props: ',pageLinks);
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -21,9 +23,24 @@ const Home: NextPage = ({home, pageLinks}: Props) => {
 
       <main className={styles.main}>
 
-        <h1>{home[0].node.title[0].text}</h1>
+        <PrismicRichText field={home[0].node.title} />
+        <PrismicRichText field={home[0].node.intro} />
+        <Image 
+          src={home[0].node.mynd.url}
+          width={home[0].node.mynd.dimensions.width/4}
+          height={home[0].node.mynd.dimensions.height/4}
+          alt={home[0].node.mynd.alt} 
+        />
         <div className={styles.grid}>
-          
+
+        {pageLinks.map(function(link: any, i: any){
+          return(
+            <Link href={'/'+link.node._meta.uid}>
+              <a>{link.node.title[0].text}</a>
+            </Link>
+            )
+        })}
+
         </div>
       </main>
 
