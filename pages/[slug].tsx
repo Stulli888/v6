@@ -1,15 +1,18 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
+import React, { useState } from 'react';
 import styles from '../styles/slug.module.css'
 import { fetchFromPrismic } from '../api/prismic'
 import { PrismicRichText } from '@prismicio/react';
 import { asText } from '@prismicio/helpers'
+import Accordion from './Accordion'
 
 type PrismicResponse = any;
 
 function Page({page}: any){
-
+	const [isActive, setIsActive] = useState(false);
+	const accordionData = page.accordion;
 	return (
 		<div>
 			
@@ -18,6 +21,14 @@ function Page({page}: any){
 				<a>Forsíða</a>
 			</Link>
 			<PrismicRichText field={page.content} />
+			<div className={styles.accordion}>
+				{accordionData.map(function(item, i){
+					return(
+          				<Accordion title={item.accordiontitle[0].text} content={item.accordiontext[0].text} />
+          			)
+        		})}
+			</div>
+
 		</div>
 	);
 }
@@ -55,6 +66,10 @@ query($uid: String = ""){
     title
     content
     image
+    accordion{
+        accordiontitle
+        accordiontext
+      }
     _linkType
   }
 }
