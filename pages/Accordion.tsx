@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../styles/slug.module.css'
 
-const Accordion = ({ title, content }) => {
+const Accordion = ({ title, content }:any) => {
   const [isActive, setIsActive] = useState(false);
   return (
     <div className={styles.accordionItem}>

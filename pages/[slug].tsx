@@ -22,7 +22,7 @@ function Page({page}: any){
 			</Link>
 			<PrismicRichText field={page.content} />
 			<div className={styles.accordion}>
-				{accordionData.map(function(item, i){
+				{accordionData.map(function(item: any, i: number){
 					return(
           				<Accordion title={item.accordiontitle[0].text} content={item.accordiontext[0].text} />
           			)
